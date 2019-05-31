@@ -2,12 +2,19 @@ module E2ga
 
 import Base.show, Base.+, Base.-, Base.*
 
-struct Geometric2
-    α::Float64
-    x::Float64
-    y::Float64
-    β::Float64
+export Geometric2
+
+struct Geometric2{T <: Real}
+    α::T
+    x::T
+    y::T
+    β::T
 end
+Geometric2(α::Real, x::Real, y::Real, β::Real) = Geometric2(promote(α, x, y, β)...)
+Geometric2(α::Real) = Geometric2(α, zero(α), zero(α), zero(α))
+
+promote_rule(::Type{Geometric2{T}}, ::Type{S}) where {T <: Real,S <: Real} = Geometric2{promote_type(T, S)}
+promote_rule(::Type{Geometric2{T}}, ::Type{Geometric2{S}}) where {T <: Real,S <: Real} = Geometric2{promote_type(T, S)}
 
 function +(a::Geometric2, b::Geometric2)
     α = a.α + b.α
@@ -36,10 +43,5 @@ end
 function show(io::IO, m::Geometric2)
     print(io, "$(m.α) + $(m.x)e1 + $(m.y)e2 + $(m.β)I")
 end
-
-const one = Geometric2(1, 0, 0, 0)
-const e1 = Geometric2(0, 1, 0, 0)
-const e2 = Geometric2(0, 0, 1, 0)
-const I = Geometric2(0, 0, 0, 1)
 
 end

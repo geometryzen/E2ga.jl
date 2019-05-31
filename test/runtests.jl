@@ -1,7 +1,22 @@
 using E2ga
 using Test
 
-import E2ga.one, E2ga.e1, E2ga.e2, E2ga.I
+@testset "promote" begin
+    a = E2ga.Geometric2(2.0, 5, 11, 17)
+    @test typeof(a.α) == Float64
+    @test typeof(a.x) == Float64
+    @test typeof(a.y) == Float64
+    @test typeof(a.β) == Float64
+    @test "$(a)" == "2.0 + 5.0e1 + 11.0e2 + 17.0I"
+end
+
+@testset "scalar" begin
+    a = E2ga.Geometric2(1)
+    @test a.α == 1
+    @test a.x == 0
+    @test a.y == 0
+    @test a.β == 0
+end
 
 @testset "+" begin
     a = E2ga.Geometric2(1, 3, 7, 13)
@@ -34,6 +49,7 @@ end
 end
 
 @testset "one" begin
+    one = E2ga.Geometric2(1)
     @test one.α == 1
     @test one.x == 0
     @test one.y == 0
@@ -41,6 +57,7 @@ end
 end
 
 @testset "e1" begin
+    e1 = E2ga.Geometric2(0, 1, 0, 0)
     @test e1.α == 0
     @test e1.x == 1
     @test e1.y == 0
@@ -48,6 +65,7 @@ end
 end
 
 @testset "e2" begin
+    e2 = E2ga.Geometric2(0, 0, 1, 0)
     @test e2.α == 0
     @test e2.x == 0
     @test e2.y == 1
@@ -55,6 +73,7 @@ end
 end
 
 @testset "I" begin
+    I = E2ga.Geometric2(0, 0, 0, 1)
     @test I.α == 0
     @test I.x == 0
     @test I.y == 0
@@ -63,5 +82,5 @@ end
 
 @testset "show" begin
     a = E2ga.Geometric2(2, 5, 11, 17)
-    @test "$(a)" == "2.0 + 5.0e1 + 11.0e2 + 17.0I"
+    @test "$(a)" == "2 + 5e1 + 11e2 + 17I"
 end

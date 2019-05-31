@@ -37,4 +37,9 @@ function show(io::IO, m::Geometric2)
     print(io, "$(m.α) + $(m.x)e1 + $(m.y)e2 + $(m.β)I")
 end
 
+const one = Geometric2(1, 0, 0, 0)
+const e1 = Geometric2(0, 1, 0, 0)
+const e2 = Geometric2(0, 0, 1, 0)
+const I = Geometric2(0, 0, 0, 1)
+
 end
